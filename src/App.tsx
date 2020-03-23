@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { CardList } from "./components/card-list/card-list.component";
+import { SearchBox } from "./components/search-box/search-box.component";
 
 // function App() {
 //   return (
@@ -39,7 +40,7 @@ type MyState = {
 class App extends Component<MyProps, MyState> {
   state: MyState = {
     monsters: [],
-    searchField: ''
+    searchField: ""
   };
 
   componentDidMount() {
@@ -51,11 +52,22 @@ class App extends Component<MyProps, MyState> {
   }
 
   render() {
+    const { monsters, searchField } = this.state;
+    const lowerCasedSearchField = searchField.toLowerCase();
+    const filteredMonsters = monsters.filter(monster => {
+      return (
+        monster.name.toLowerCase().includes(lowerCasedSearchField) ||
+        monster.email.toLowerCase().includes(lowerCasedSearchField)
+      );
+    });
+
     return (
       <div className="App">
-        <input type="search" placeholder="search monsters" onChange={
-          e => this.setState({ searchField: e.target.value })} />
-        <CardList items={this.state.monsters} />
+        <SearchBox
+          placeholder="search monsters"
+          handleChange={e => this.setState({ searchField: e.target.value })}
+        />
+        <CardList items={filteredMonsters} />
       </div>
     );
   }
