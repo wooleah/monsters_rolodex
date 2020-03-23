@@ -51,6 +51,10 @@ class App extends Component<MyProps, MyState> {
       );
   }
 
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    this.setState({ searchField: e.target.value });
+  };
+
   render() {
     const { monsters, searchField } = this.state;
     const lowerCasedSearchField = searchField.toLowerCase();
@@ -63,9 +67,10 @@ class App extends Component<MyProps, MyState> {
 
     return (
       <div className="App">
+        <h1>Monsters Rolodex</h1>
         <SearchBox
           placeholder="search monsters"
-          handleChange={e => this.setState({ searchField: e.target.value })}
+          handleChange={this.handleChange}
         />
         <CardList items={filteredMonsters} />
       </div>
