@@ -33,11 +33,13 @@ export type Monster = {
 type MyProps = {};
 type MyState = {
   monsters: Monster[];
+  searchField: string;
 };
 
 class App extends Component<MyProps, MyState> {
   state: MyState = {
-    monsters: []
+    monsters: [],
+    searchField: ''
   };
 
   componentDidMount() {
@@ -51,7 +53,8 @@ class App extends Component<MyProps, MyState> {
   render() {
     return (
       <div className="App">
-        <input type="search" placeholder="search monsters" />
+        <input type="search" placeholder="search monsters" onChange={
+          e => this.setState({ searchField: e.target.value })} />
         <CardList items={this.state.monsters} />
       </div>
     );
